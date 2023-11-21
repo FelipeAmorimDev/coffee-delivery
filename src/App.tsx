@@ -1,13 +1,18 @@
-import { Heart } from '@phosphor-icons/react'
+import { ThemeProvider } from 'styled-components'
+import { BrowserRouter } from 'react-router-dom'
+import { defaultTheme } from './styles/themes/default'
+import { GlobalStyle } from './styles/global'
+import { Router } from './Router'
 
 function App() {
   return (
-    <div>
-      <h1>
-        Hello World
-        <Heart weight="fill" />
-      </h1>
-    </div>
+    <ThemeProvider theme={defaultTheme}>
+      <BrowserRouter>
+        <Router />
+      </BrowserRouter>
+
+      <GlobalStyle />
+    </ThemeProvider>
   )
 }
 
