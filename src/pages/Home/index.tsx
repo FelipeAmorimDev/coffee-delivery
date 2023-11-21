@@ -1,5 +1,44 @@
 import { Coffee, Package, ShoppingCart, Timer } from '@phosphor-icons/react'
-import { BenefityIcon, BenefityList, HeroBg, HeroContainer } from './styles'
+import {
+  AddToCartButton,
+  AddToCartOptions,
+  BenefityIcon,
+  BenefityList,
+  CoffeeTags,
+  HeroBg,
+  HeroContainer,
+  ShopContainer,
+  ShopList,
+} from './styles'
+import { ItemQuantity } from '../../components/ItemQuantity'
+import { coffees } from '../../mock/coffees'
+
+const benefits = [
+  {
+    id: '1',
+    title: 'Compra simples e segura',
+    backgroundColor: '#C47F17',
+    element: <ShoppingCart size={16} color="#FAFAFA" weight="fill" />,
+  },
+  {
+    id: '2',
+    title: 'Embalagem mantém o café intacto',
+    backgroundColor: '#574F4D',
+    element: <Package size={16} color="#FAFAFA" weight="fill" />,
+  },
+  {
+    id: '3',
+    title: 'Entrega rápida e rastreada',
+    backgroundColor: '#DBAC2C',
+    element: <Timer size={16} color="#FAFAFA" weight="fill" />,
+  },
+  {
+    id: '4',
+    title: 'O café chega fresquinho até você',
+    backgroundColor: '#8047F8',
+    element: <Coffee size={16} color="#FAFAFA" weight="fill" />,
+  },
+]
 
 export function Home() {
   return (
@@ -13,30 +52,16 @@ export function Home() {
               qualquer hora
             </p>
             <BenefityList>
-              <li>
-                <BenefityIcon $backgroundIcon="#C47F17">
-                  <ShoppingCart size={16} color="#FAFAFA" weight="fill" />
-                </BenefityIcon>
-                <span>Compra simples e segura</span>
-              </li>
-              <li>
-                <BenefityIcon $backgroundIcon="#574F4D">
-                  <Package size={16} color="#FAFAFA" weight="fill" />
-                </BenefityIcon>
-                <span>Embalagem mantém o café intacto</span>
-              </li>
-              <li>
-                <BenefityIcon $backgroundIcon="#DBAC2C">
-                  <Timer size={16} color="#FAFAFA" weight="fill" />
-                </BenefityIcon>
-                <span>Entrega rápida e rastreada</span>
-              </li>
-              <li>
-                <BenefityIcon $backgroundIcon="#8047F8">
-                  <Coffee size={16} color="#FAFAFA" weight="fill" />
-                </BenefityIcon>
-                <span>O café chega fresquinho até você</span>
-              </li>
+              {benefits.map((benefit) => {
+                return (
+                  <li key={benefit.id}>
+                    <BenefityIcon $backgroundIcon={benefit.backgroundColor}>
+                      {benefit.element}
+                    </BenefityIcon>
+                    <span>{benefit.title}</span>
+                  </li>
+                )
+              })}
             </BenefityList>
           </div>
           <img
@@ -45,6 +70,37 @@ export function Home() {
           />
         </HeroContainer>
       </HeroBg>
+
+      <ShopContainer>
+        <h2>Nossos cafés</h2>
+        <ShopList>
+          {coffees.map((coffe) => {
+            return (
+              <li key={coffe.id}>
+                <img src={coffe.image} alt="" />
+                <CoffeeTags>
+                  {coffe.tags.map((tag) => (
+                    <span key={tag}>{tag.toUpperCase()}</span>
+                  ))}
+                </CoffeeTags>
+
+                <h3>{coffe.title}</h3>
+                <p>{coffe.description}</p>
+
+                <div>
+                  R$ <span>{coffe.price}</span>
+                  <AddToCartOptions>
+                    <ItemQuantity />
+                    <AddToCartButton>
+                      <ShoppingCart weight="fill" color="#F3F2F2" size={22} />
+                    </AddToCartButton>
+                  </AddToCartOptions>
+                </div>
+              </li>
+            )
+          })}
+        </ShopList>
+      </ShopContainer>
     </main>
   )
 }
