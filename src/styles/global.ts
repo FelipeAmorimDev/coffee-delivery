@@ -16,4 +16,8 @@ export const GlobalStyle = createGlobalStyle`
   body, input, textarea, button{
     ${mixins.fonts.textM}
   }
+  
+  ul{
+    list-style: none;
+  }
 `
