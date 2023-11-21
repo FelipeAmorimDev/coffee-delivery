@@ -115,7 +115,10 @@ export const AddToCartButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-
+  transition: 0.3s;
+  &:hover {
+    background: ${(props) => props.theme.purple};
+  }
   cursor: pointer;
 `
 export const AddToCartOptions = styled.div`

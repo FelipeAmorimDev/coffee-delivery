@@ -1,3 +1,8 @@
+import { useContext } from 'react'
+import { cartContext } from '../../context/CartContext'
+
 export function Cart() {
-  return <h1>Cart</h1>
+  const { cartList } = useContext(cartContext)
+  const JSONData = JSON.stringify(cartList, null, 2)
+  return <p>{JSONData}</p>
 }
