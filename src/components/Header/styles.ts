@@ -2,9 +2,9 @@ import styled from 'styled-components'
 import { mixins } from '../../styles/mixins'
 
 export const HeaderContainer = styled.header`
-  max-width: 1120px;
+  max-width: calc(1120px + 32px);
   margin: 0 auto;
-  padding: 32px 0px;
+  padding: 32px 16px;
 
   display: flex;
   align-items: center;
