@@ -1,5 +1,5 @@
 import { MapPin, ShoppingCart } from '@phosphor-icons/react'
-import { Aside, HeaderContainer } from './styles'
+import { Aside, CartButton, CartFeedback, HeaderContainer } from './styles'
 
 export function Header() {
   return (
@@ -10,9 +10,10 @@ export function Header() {
           <MapPin weight="fill" color="#8047F8" size={22} className="teste" />
           <span>Porto Alegre, RS</span>
         </div>
-        <button>
+        <CartButton>
           <ShoppingCart weight="fill" color="#C47F17" size={19} />
-        </button>
+          <CartFeedback>8</CartFeedback>
+        </CartButton>
       </Aside>
     </HeaderContainer>
   )

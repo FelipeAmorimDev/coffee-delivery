@@ -14,7 +14,7 @@ export const Aside = styled.div`
   display: flex;
   gap: 12px;
 
-  div {
+  > div {
     padding: 10px 8px;
     ${mixins.fonts.textS}
     color: ${(props) => props.theme['purple-dark']};
@@ -23,36 +23,34 @@ export const Aside = styled.div`
     align-items: center;
     cursor: pointer;
   }
+`
 
-  button {
-    height: 38px;
-    width: 38px;
-    border: 0;
-    border-radius: 6px;
-    background-color: ${(props) => props.theme['yellow-light']};
-    cursor: pointer;
+export const CartButton = styled.button`
+  height: 38px;
+  width: 38px;
+  border: 0;
+  border-radius: 6px;
+  background-color: ${(props) => props.theme['yellow-light']};
+  cursor: pointer;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+`
 
-    &::after {
-      content: '3';
-      width: 20px;
-      height: 20px;
-      display: block;
-      border-radius: 100%;
-      background: ${(props) => props.theme['yellow-dark']};
-      color: ${(props) => props.theme.white};
+export const CartFeedback = styled.div`
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  background: ${(props) => props.theme['yellow-dark']};
+  color: ${(props) => props.theme.white};
 
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: absolute;
-      top: -6px;
-      right: -8.35px;
-      ${mixins.fonts.textXS}
-    }
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: -6px;
+  right: -8.35px;
+  ${mixins.fonts.textXS}
 `
