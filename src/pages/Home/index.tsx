@@ -11,7 +11,6 @@ import {
 } from './styles'
 import { ItemQuantity } from '../../components/ItemQuantity'
 import { coffees } from '../../mock/coffees'
-import { useState } from 'react'
 
 const benefits = [
   {
@@ -51,26 +50,6 @@ export interface IItemToAdd {
 }
 
 export function Home() {
-  const [cartList, setCartList] = useState<IItemToAdd[]>([])
-
-  function addItemToCart(itemToAdd: IItemToAdd) {
-    const itemExistInCart = cartList.find((item) => item.id === itemToAdd.id)
-    setCartList((cartList) => {
-      if (itemExistInCart) {
-        const cartList2 = cartList.map((cart) => {
-          if (cart.id === itemExistInCart.id) {
-            return { ...cart, quantity: itemToAdd.quantity }
-          }
-          return cart
-        })
-
-        return cartList2
-      } else {
-        return [...cartList, itemToAdd]
-      }
-    })
-  }
-
   return (
     <main>
       <HeroBg>
@@ -120,10 +99,7 @@ export function Home() {
                 <div>
                   R$ <span>{coffe.price}</span>
                   <AddToCartOptions>
-                    <ItemQuantity
-                      coffe={coffe}
-                      onAddItemToCart={addItemToCart}
-                    />
+                    <ItemQuantity coffe={coffe} />
                   </AddToCartOptions>
                 </div>
               </li>

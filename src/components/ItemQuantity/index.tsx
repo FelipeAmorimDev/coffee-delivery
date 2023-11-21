@@ -1,8 +1,9 @@
 import { Minus, Plus, ShoppingCart } from '@phosphor-icons/react'
 import { ItemQuantityContainer } from './styles'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { AddToCartButton } from '../../pages/Home/styles'
-import { IItemToAdd } from '../../pages/Home'
+import { cartContext } from '../../context/CartContext'
+// import { IItemToAdd } from '../../pages/Home'
 
 interface ItemQuantityProps {
   coffe: {
@@ -13,11 +14,12 @@ interface ItemQuantityProps {
     price: string
     image: string
   }
-  onAddItemToCart: (itemToAdd: IItemToAdd) => void
+  // onAddItemToCart: (itemToAdd: IItemToAdd) => void
 }
 
-export function ItemQuantity({ coffe, onAddItemToCart }: ItemQuantityProps) {
-  const [quantity, setQuantity] = useState(0)
+export function ItemQuantity({ coffe }: ItemQuantityProps) {
+  const [quantity, setQuantity] = useState(1)
+  const { addItemToCart } = useContext(cartContext)
 
   function handleAddOneItemQuantity() {
     setQuantity((quantity) => quantity + 1)
@@ -25,7 +27,7 @@ export function ItemQuantity({ coffe, onAddItemToCart }: ItemQuantityProps) {
 
   function handleRemoveOneItemQuantity() {
     setQuantity((quantity) => {
-      if (quantity === 0) {
+      if (quantity === 1) {
         return quantity
       } else {
         return quantity - 1
@@ -35,7 +37,7 @@ export function ItemQuantity({ coffe, onAddItemToCart }: ItemQuantityProps) {
 
   function handleAddItemToCart() {
     const coffeeToAddInCart = { ...coffe, quantity }
-    onAddItemToCart(coffeeToAddInCart)
+    addItemToCart(coffeeToAddInCart)
   }
 
   return (
