@@ -11,7 +11,7 @@ interface IItemToAdd {
   tags: string[]
   price: string
   image: string
-  quantity?: number
+  quantity: number
 }
 
 interface CartContextData {

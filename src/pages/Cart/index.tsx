@@ -1,16 +1,12 @@
-// import { useContext } from 'react'
-// import { cartContext } from '../../context/CartContext'
 import {
   Bank,
   CreditCard,
   CurrencyDollar,
   MapPin,
   Money,
-  Trash,
 } from '@phosphor-icons/react'
 import {
   CartContainer,
-  CartItemSeparator,
   CartList,
   CartListContainer,
   CompleteOrderContainer,
@@ -20,14 +16,13 @@ import {
   PriceContainer,
 } from './styles'
 import { RadioPaymentMethod } from './components/RadioPaymentMethod'
-import { useState } from 'react'
-import { ItemQuantity } from '../../components/ItemQuantity'
-// import { useContext, useState } from 'react'
-// import { cartContext } from '../../context/CartContext'
+import { useContext, useState } from 'react'
+import { cartContext } from '../../context/CartContext'
+import { CartItem } from './components/CartItem'
 
 export function Cart() {
-  // const { cartList } = useContext(cartContext)
   const [paymentMethod, setPaymentMethod] = useState('')
+  const { cartList } = useContext(cartContext)
 
   return (
     <CartContainer>
@@ -110,35 +105,9 @@ export function Cart() {
       <CartListContainer>
         <span>Cafés selecionados</span>
         <CartList>
-          <li>
-            <img src="./images/coffees/americano.png" alt="" />
-            <div>
-              <span>Expresso Tradicional</span>
-              <div>
-                <ItemQuantity quantity={3} />
-                <button>
-                  <Trash size={16} />
-                  REMOVER
-                </button>
-              </div>
-            </div>
-            <span>R$ 9,90</span>
-          </li>
-          <CartItemSeparator />
-          <li>
-            <img src="./images/coffees/americano.png" alt="" />
-            <div>
-              <span>Expresso Tradicional</span>
-              <div>
-                <ItemQuantity quantity={3} />
-                <button>
-                  <Trash size={16} />
-                  REMOVER
-                </button>
-              </div>
-            </div>
-            <span>R$ 9,90</span>
-          </li>
+          {cartList.map((cartItem) => {
+            return <CartItem key={cartItem.id} coffee={cartItem} />
+          })}
         </CartList>
         <PriceContainer>
           <p>
