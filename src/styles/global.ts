@@ -7,7 +7,11 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
   }
-  
+
+   input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+        display: none;
+      }
   :focus{
     outline: none;
     box-shadow: 0 0 0 1px #C47F17;

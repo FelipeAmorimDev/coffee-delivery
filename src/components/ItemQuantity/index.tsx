@@ -1,26 +1,25 @@
 import { Minus, Plus } from '@phosphor-icons/react'
 import { ItemQuantityContainer } from './styles'
 
-import { CoffeeItemProps } from '../../pages/Home/components/CoffeeItem'
 // import { IItemToAdd } from '../../pages/Home'
 
-export interface ItemQuantityProps extends CoffeeItemProps {
-  quantity?: number
+export interface ItemQuantityProps {
+  quantity: number
   onAddCoffeeItem: () => void
-  OnRemoveCoffeeItem: () => void
+  onRemoveCoffeeItem: () => void
 }
 
 export function ItemQuantity({
   quantity,
   onAddCoffeeItem,
-  OnRemoveCoffeeItem,
+  onRemoveCoffeeItem,
 }: ItemQuantityProps) {
   function handleAddOneItemQuantity() {
     onAddCoffeeItem()
   }
 
   function handleRemoveOneItemQuantity() {
-    OnRemoveCoffeeItem()
+    onRemoveCoffeeItem()
   }
 
   return (

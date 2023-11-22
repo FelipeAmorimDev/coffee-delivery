@@ -6,8 +6,11 @@ export const CartContainer = styled.section`
   margin: 0 auto;
   padding: 40px 16px 0px;
   display: grid;
-  grid-template-columns: 7fr auto;
+  grid-template-columns: 1fr 448px;
   gap: 32px;
+  @media (max-width: 1100px) {
+    grid-template-columns: 1fr;
+  }
 `
 
 export const CompleteOrderContainer = styled.div`
@@ -17,6 +20,10 @@ export const CompleteOrderContainer = styled.div`
     color: ${(props) => props.theme['base-subtitle']};
     margin-bottom: 15px;
     display: inline-block;
+  }
+
+  @media (max-width: 660px) {
+    padding: 10px;
   }
 `
 export const CartListContainer = styled.div`
@@ -38,38 +45,16 @@ export const CartListContainer = styled.div`
     margin-top: 36px;
     cursor: pointer;
   }
+
+  @media (max-width: 660px) {
+    padding: 10px;
+  }
 `
 export const CartList = styled.ul`
   li {
     padding: 8px 4px;
     display: flex;
-
-    > div {
-      margin-right: 50px;
-
-      span {
-        ${mixins.fonts.textM}
-        color: ${(props) => props.theme['base-subtitle']};
-      }
-
-      > div {
-        margin-top: 8px;
-        display: flex;
-        gap: 8px;
-        > button {
-          display: flex;
-          align-items: center;
-          gap: 4px;
-          padding: 8px;
-          ${mixins.fonts.buttonM}
-          background: ${(props) => props.theme['base-button']};
-          color: ${(props) => props.theme['base-text']};
-          border: 0;
-          border-radius: 6px;
-          cursor: pointer;
-        }
-      }
-    }
+    justify-content: space-between;
 
     img {
       width: 64px;
@@ -80,6 +65,35 @@ export const CartList = styled.ul`
       ${mixins.fonts.textM}
       font-weight: 700;
       color: ${(props) => props.theme['base-text']};
+    }
+  }
+`
+
+export const CartItemHeader = styled.div`
+  display: flex;
+`
+
+export const CartItemHeaderContainer = styled.div`
+  span {
+    ${mixins.fonts.textM}
+    color: ${(props) => props.theme['base-subtitle']};
+  }
+
+  > div {
+    margin-top: 8px;
+    display: flex;
+    gap: 8px;
+    > button {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 8px;
+      ${mixins.fonts.buttonM}
+      background: ${(props) => props.theme['base-button']};
+      color: ${(props) => props.theme['base-text']};
+      border: 0;
+      border-radius: 6px;
+      cursor: pointer;
     }
   }
 `
@@ -113,6 +127,7 @@ export const PriceContainer = styled.div`
 export const FormLabel = styled.div`
   display: flex;
   gap: 8px;
+  margin-bottom: 32px;
 
   > div {
     display: flex;
@@ -154,11 +169,23 @@ export const InputsContainer = styled.div`
   #address,
   #city,
   #complement {
-    flex: 1;
+    flex: 2;
+  }
+
+  #neighborhood,
+  #number,
+  #zip {
+    width: 200px;
+    @media (max-width: 660px) {
+      width: initial;
+    }
   }
 
   #state {
-    max-width: 60px;
+    width: 60px;
+    @media (max-width: 660px) {
+      width: initial;
+    }
   }
 
   > input {
@@ -171,6 +198,9 @@ export const InputsContainer = styled.div`
     display: flex;
     gap: 12px;
     margin-top: 16px;
+    @media (max-width: 660px) {
+      flex-direction: column;
+    }
 
     /* &:first-of-type {
       > input {
@@ -180,9 +210,13 @@ export const InputsContainer = styled.div`
       }
     } */
   }
+
+  @media (max-width: 1080px) {
+  }
 `
 export const PaymentMethod = styled.div`
   display: flex;
   flex-wrap: wrap;
+  align-content: flex-start;
   gap: 12px;
 `

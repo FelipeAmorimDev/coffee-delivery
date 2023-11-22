@@ -18,7 +18,7 @@ export function Header() {
     <HeaderBg>
       <HeaderContainer>
         <NavLink to="/">
-          <img src="./logo.svg" alt="um copo de café roxo" />
+          <img src="../../../logo.svg" alt="um copo de café roxo" />
         </NavLink>
 
         <Aside>

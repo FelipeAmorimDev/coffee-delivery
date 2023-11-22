@@ -35,6 +35,7 @@ export function CoffeeItem({ coffe }: CoffeeItemProps) {
 
   function handleAddItemToCart() {
     const coffeeToAddInCart = { ...coffe, quantity }
+    setQuantity(1)
     addItemToCart(coffeeToAddInCart)
   }
 
@@ -54,10 +55,9 @@ export function CoffeeItem({ coffe }: CoffeeItemProps) {
         R$ <span>{coffe.price}</span>
         <AddToCartOptions>
           <ItemQuantity
-            coffe={coffe}
             quantity={quantity}
             onAddCoffeeItem={addCoffeeItem}
-            OnRemoveCoffeeItem={removeCoffeeItem}
+            onRemoveCoffeeItem={removeCoffeeItem}
           />
           <AddToCartButton onClick={handleAddItemToCart}>
             <ShoppingCart weight="fill" color="#F3F2F2" size={22} />

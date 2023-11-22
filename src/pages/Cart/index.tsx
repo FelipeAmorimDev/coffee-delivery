@@ -19,16 +19,67 @@ import { RadioPaymentMethod } from './components/RadioPaymentMethod'
 import { useContext, useState } from 'react'
 import { cartContext } from '../../context/CartContext'
 import { CartItem } from './components/CartItem'
+import { useForm } from 'react-hook-form'
+import * as zod from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useNavigate } from 'react-router-dom'
+
+const confirmOrderSchema = zod.object({
+  zip: zod.number({
+    required_error: 'O campo cep é obrigatorio',
+    invalid_type_error: 'O campo cep tem que ser um numero',
+  }),
+  address: zod.string().min(1, 'Digite um endereço valido'),
+  number: zod.number({
+    required_error: 'O campo numero é obrigatorio',
+    invalid_type_error: 'O campo numero é do tipo numerico',
+  }),
+  complement: zod.string(),
+  neighborhood: zod.string().min(1, 'Digite um bairro valido'),
+  city: zod.string().min(1, 'Digite uma cidade valida'),
+  state: zod.string().min(1, 'Digite um estado valido'),
+})
+
+type ConfirmOrderData = zod.infer<typeof confirmOrderSchema>
 
 export function Cart() {
-  const [paymentMethod, setPaymentMethod] = useState('')
-  const { cartList } = useContext(cartContext)
+  const [paymentMethod, setPaymentMethod] = useState('creditcard')
+  const { cartList, addItensToOrderList, cleanCartList } =
+    useContext(cartContext)
+
+  const { register, handleSubmit } = useForm<ConfirmOrderData>({
+    resolver: zodResolver(confirmOrderSchema),
+    defaultValues: {
+      zip: undefined,
+      address: '',
+      number: undefined,
+      complement: '',
+      neighborhood: '',
+      city: '',
+      state: '',
+    },
+  })
+
+  const totalCartPrice = cartList.reduce(
+    (acc, cartItem) => Number(cartItem.price) * cartItem.quantity + acc,
+    0,
+  )
+  const deliveryPrice = 10.5
+  const navigate = useNavigate()
+
+  function handleConfirmOrder(data: ConfirmOrderData, event: any) {
+    const paymentMethod = event.target.paymentmethod.value
+    const id = new Date().getTime()
+    addItensToOrderList({ ...data, id, paymentMethod })
+    cleanCartList()
+    navigate(`/order/${id}/success`)
+  }
 
   return (
     <CartContainer>
       <CompleteOrderContainer>
         <span>Complete seu pedido</span>
-        <form>
+        <form id="checkoutform" onSubmit={handleSubmit(handleConfirmOrder)}>
           <FormLabel>
             <MapPin size={22} color="#C47F17" />
             <div>
@@ -37,31 +88,52 @@ export function Cart() {
             </div>
           </FormLabel>
           <InputsContainer>
-            <input type="text" name="zip" id="zip" placeholder="CEP" />
-            <input type="text" name="address" id="address" placeholder="Rua" />
+            <input
+              type="number"
+              id="zip"
+              maxLength={8}
+              placeholder="CEP"
+              {...register('zip', { valueAsNumber: true })}
+            />
+            <input
+              type="text"
+              id="address"
+              placeholder="Rua"
+              {...register('address')}
+            />
             <div>
               <input
-                type="text"
-                name="number"
+                type="number"
                 id="number"
                 placeholder="Número"
+                {...register('number', { valueAsNumber: true })}
               />
               <input
                 type="text"
-                name="complement"
                 id="complement"
                 placeholder="Complemento"
+                {...register('complement')}
               />
             </div>
             <div>
               <input
                 type="text"
-                name="neighborhood"
                 id="neighborhood"
                 placeholder="Bairro"
+                {...register('neighborhood')}
               />
-              <input type="text" name="city" id="city" placeholder="Cidade" />
-              <input type="text" name="state" id="state" placeholder="UF" />
+              <input
+                type="text"
+                id="city"
+                placeholder="Cidade"
+                {...register('city')}
+              />
+              <input
+                type="text"
+                id="state"
+                placeholder="UF"
+                {...register('state')}
+              />
             </div>
           </InputsContainer>
           <FormLabel>
@@ -111,16 +183,16 @@ export function Cart() {
         </CartList>
         <PriceContainer>
           <p>
-            Total de itens<span>R$ 29,70</span>
+            Total de itens<span>R$ {totalCartPrice.toFixed(2)}</span>
           </p>
           <p>
-            Entrega<span>R$ 3,50</span>
+            Entrega<span>R$ {deliveryPrice.toFixed(2)}</span>
           </p>
           <p>
-            Total<span>R$ 33,20</span>
+            Total<span>R$ {(totalCartPrice + deliveryPrice).toFixed(2)}</span>
           </p>
         </PriceContainer>
-        <button>CONFIRMAR PEDIDO</button>
+        <button form="checkoutform">CONFIRMAR PEDIDO</button>
       </CartListContainer>
     </CartContainer>
   )

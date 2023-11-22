@@ -5,6 +5,7 @@ export const HeaderBg = styled.div`
   position: sticky;
   width: 100%;
   top: 0;
+  z-index: 3;
   background: ${(props) => props.theme.background};
   box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
 `

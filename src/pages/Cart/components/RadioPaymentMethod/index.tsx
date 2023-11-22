@@ -23,6 +23,7 @@ export function RadioPaymentMethod({
         value={value}
         checked={paymentMethod === value}
         onChange={() => setPaymentMethod(value)}
+        name="paymentmethod"
       />
     </RadioInputContainer>
   )

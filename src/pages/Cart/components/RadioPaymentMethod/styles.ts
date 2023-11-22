@@ -3,11 +3,13 @@ import { mixins } from '../../../../styles/mixins'
 
 export const RadioInputContainer = styled.div`
   position: relative;
-  margin-top: 32px;
   padding: 16px 19.67px 16px 16px;
   flex: 1;
+  display: flex;
+  justify-content: center;
   background-color: ${(props) => props.theme['base-button']};
   border-radius: 6px;
+  min-width: 178px;
 
   ${mixins.fonts.buttonM}
   color: ${(props) => props.theme['base-text']};
