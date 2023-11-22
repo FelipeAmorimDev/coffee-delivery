@@ -1,16 +1,14 @@
 import { Coffee, Package, ShoppingCart, Timer } from '@phosphor-icons/react'
 import {
-  AddToCartOptions,
   BenefityIcon,
   BenefityList,
-  CoffeeTags,
   HeroBg,
   HeroContainer,
   ShopContainer,
   ShopList,
 } from './styles'
-import { ItemQuantity } from '../../components/ItemQuantity'
 import { coffees } from '../../mock/coffees'
+import { CoffeeItem } from './components/CoffeeItem'
 
 const benefits = [
   {
@@ -84,26 +82,7 @@ export function Home() {
         <h2>Nossos cafés</h2>
         <ShopList>
           {coffees.map((coffe) => {
-            return (
-              <li key={coffe.id}>
-                <img src={coffe.image} alt="" />
-                <CoffeeTags>
-                  {coffe.tags.map((tag) => (
-                    <span key={tag}>{tag.toUpperCase()}</span>
-                  ))}
-                </CoffeeTags>
-
-                <h3>{coffe.title}</h3>
-                <p>{coffe.description}</p>
-
-                <div>
-                  R$ <span>{coffe.price}</span>
-                  <AddToCartOptions>
-                    <ItemQuantity coffe={coffe} />
-                  </AddToCartOptions>
-                </div>
-              </li>
-            )
+            return <CoffeeItem key={coffe.id} coffe={coffe} />
           })}
         </ShopList>
       </ShopContainer>

@@ -1,60 +1,37 @@
-import { Minus, Plus, ShoppingCart } from '@phosphor-icons/react'
+import { Minus, Plus } from '@phosphor-icons/react'
 import { ItemQuantityContainer } from './styles'
-import { useContext, useState } from 'react'
-import { AddToCartButton } from '../../pages/Home/styles'
-import { cartContext } from '../../context/CartContext'
+
+import { CoffeeItemProps } from '../../pages/Home/components/CoffeeItem'
 // import { IItemToAdd } from '../../pages/Home'
 
-interface ItemQuantityProps {
-  coffe: {
-    id: string
-    title: string
-    description: string
-    tags: string[]
-    price: string
-    image: string
-  }
-  // onAddItemToCart: (itemToAdd: IItemToAdd) => void
+export interface ItemQuantityProps extends CoffeeItemProps {
+  quantity?: number
+  onAddCoffeeItem: () => void
+  OnRemoveCoffeeItem: () => void
 }
 
-export function ItemQuantity({ coffe }: ItemQuantityProps) {
-  const [quantity, setQuantity] = useState(1)
-  const { addItemToCart } = useContext(cartContext)
-
+export function ItemQuantity({
+  quantity,
+  onAddCoffeeItem,
+  OnRemoveCoffeeItem,
+}: ItemQuantityProps) {
   function handleAddOneItemQuantity() {
-    setQuantity((quantity) => quantity + 1)
+    onAddCoffeeItem()
   }
 
   function handleRemoveOneItemQuantity() {
-    setQuantity((quantity) => {
-      if (quantity === 1) {
-        return quantity
-      } else {
-        return quantity - 1
-      }
-    })
-  }
-
-  function handleAddItemToCart() {
-    const coffeeToAddInCart = { ...coffe, quantity }
-    addItemToCart(coffeeToAddInCart)
+    OnRemoveCoffeeItem()
   }
 
   return (
-    <>
-      <ItemQuantityContainer>
-        <button onClick={handleRemoveOneItemQuantity}>
-          <Minus weight="bold" color="#8047F8" size={14} />
-        </button>
-        <span>{quantity}</span>
-        <button onClick={handleAddOneItemQuantity}>
-          <Plus weight="bold" color="#8047F8" size={14} />
-        </button>
-      </ItemQuantityContainer>
-
-      <AddToCartButton onClick={handleAddItemToCart}>
-        <ShoppingCart weight="fill" color="#F3F2F2" size={22} />
-      </AddToCartButton>
-    </>
+    <ItemQuantityContainer>
+      <button onClick={handleRemoveOneItemQuantity}>
+        <Minus weight="bold" color="#8047F8" size={14} />
+      </button>
+      <span>{quantity}</span>
+      <button onClick={handleAddOneItemQuantity}>
+        <Plus weight="bold" color="#8047F8" size={14} />
+      </button>
+    </ItemQuantityContainer>
   )
 }
