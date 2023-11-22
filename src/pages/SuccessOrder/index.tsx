@@ -9,12 +9,6 @@ import { useContext } from 'react'
 import { cartContext } from '../../context/CartContext'
 import { useParams } from 'react-router-dom'
 
-const paymentMethods = {
-  money: 'Dinheiro',
-  creditcard: 'Cartão de Credito',
-  debitcard: 'Cartão de Debito',
-}
-
 export function SuccessOrder() {
   const { orderList } = useContext(cartContext)
   const params = useParams()
@@ -22,8 +16,6 @@ export function SuccessOrder() {
   const orderConfirmed = orderList.find(
     (order) => order.id === Number(params.orderId),
   )
-
-  const paymentType = orderConfirmed?.paymentMethod
 
   return (
     <SuccessOrderContainer>
@@ -66,7 +58,7 @@ export function SuccessOrder() {
             <DataContainer>
               <p>Pagamento na entrega</p>
               <p>
-                <strong>{paymentMethods[paymentType]}</strong>
+                <strong>{orderConfirmed?.paymentMethod}</strong>
               </p>
             </DataContainer>
           </DeliveryInfoItem>

@@ -37,6 +37,7 @@ interface CartContextData {
   cleanCartList: () => void
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const cartContext = createContext({} as CartContextData)
 
 export function CartContextProvider({ children }: CartContextProviderProps) {
