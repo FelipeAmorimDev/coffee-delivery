@@ -1,4 +1,12 @@
-import { ReactNode, createContext, useState } from 'react'
+import { ReactNode, createContext, useReducer, useState } from 'react'
+import { cartReducer } from '../reducers/cart/reducer'
+import {
+  addCoffeeItemAction,
+  addItemToCartAction,
+  cleanCartListAction,
+  removeCoffeeItemAction,
+  removeItemInCartAction,
+} from '../reducers/cart/actions'
 
 interface CartContextProviderProps {
   children: ReactNode
@@ -41,9 +49,9 @@ interface CartContextData {
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const cartContext = createContext({} as CartContextData)
-
+// useState<IItemToAdd[]>([])
 export function CartContextProvider({ children }: CartContextProviderProps) {
-  const [cartList, setCartList] = useState<IItemToAdd[]>([])
+  const [cartList, dispatch] = useReducer(cartReducer, [])
   const [orderList, setOrderList] = useState<IOrders[]>([])
   const [paymentMethod, setPaymentMethod] = useState('Cartão de Credito')
 
@@ -56,61 +64,25 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
   }
 
   function addItemToCart(itemToAdd: IItemToAdd) {
-    const itemExistInCart = cartList.find((item) => item.id === itemToAdd.id)
-
-    setCartList((cartList) => {
-      if (itemExistInCart) {
-        const cartList2 = cartList.map((cart) => {
-          if (cart.id === itemExistInCart.id) {
-            return { ...cart, quantity: cart.quantity + itemToAdd.quantity }
-          }
-          return cart
-        })
-
-        return cartList2
-      } else {
-        return [...cartList, itemToAdd]
-      }
-    })
+    dispatch(addItemToCartAction(itemToAdd))
   }
 
   function cleanCartList() {
-    setCartList([])
+    dispatch(cleanCartListAction())
   }
 
   function removeItemInCart(id: string) {
-    setCartList((cartList) => {
-      return cartList.filter((cartItem) => cartItem.id !== id)
-    })
+    dispatch(removeItemInCartAction(id))
   }
 
   function removeCoffeeItem(id: string) {
-    setCartList((cartList) => {
-      return cartList.map((cartItem) => {
-        if (cartItem.id === id) {
-          if (cartItem.quantity > 1) {
-            return { ...cartItem, quantity: cartItem.quantity - 1 }
-          } else {
-            return cartItem
-          }
-        } else {
-          return cartItem
-        }
-      })
-    })
+    dispatch(removeCoffeeItemAction(id))
   }
 
   function addCoffeeItem(id: string) {
-    setCartList((cartList) => {
-      return cartList.map((cartItem) => {
-        if (cartItem.id === id) {
-          return { ...cartItem, quantity: cartItem.quantity + 1 }
-        } else {
-          return cartItem
-        }
-      })
-    })
+    dispatch(addCoffeeItemAction(id))
   }
+
   return (
     <cartContext.Provider
       value={{
