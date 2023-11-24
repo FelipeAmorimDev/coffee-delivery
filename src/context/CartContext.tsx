@@ -16,9 +16,9 @@ interface IItemToAdd {
 
 interface IOrders {
   id: number
-  zip: number
+  zip: string
   address: string
-  number: number
+  number: string
   complement: string
   neighborhood: string
   city: string
@@ -29,12 +29,14 @@ interface IOrders {
 interface CartContextData {
   cartList: IItemToAdd[]
   orderList: IOrders[]
+  paymentMethod: string
   addItemToCart: (itemToAdd: IItemToAdd) => void
   addCoffeeItem: (id: string) => void
   removeCoffeeItem: (id: string) => void
   removeItemInCart: (id: string) => void
   addItensToOrderList: (order: IOrders) => void
   cleanCartList: () => void
+  changePaymentMethod: (paymentMethod: string) => void
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -43,13 +45,19 @@ export const cartContext = createContext({} as CartContextData)
 export function CartContextProvider({ children }: CartContextProviderProps) {
   const [cartList, setCartList] = useState<IItemToAdd[]>([])
   const [orderList, setOrderList] = useState<IOrders[]>([])
+  const [paymentMethod, setPaymentMethod] = useState('Cartão de Credito')
 
   function addItensToOrderList(newOrder: IOrders) {
     setOrderList((previusState) => [...previusState, { ...newOrder }])
   }
 
+  function changePaymentMethod(paymentMethod: string) {
+    setPaymentMethod(paymentMethod)
+  }
+
   function addItemToCart(itemToAdd: IItemToAdd) {
     const itemExistInCart = cartList.find((item) => item.id === itemToAdd.id)
+
     setCartList((cartList) => {
       if (itemExistInCart) {
         const cartList2 = cartList.map((cart) => {
@@ -69,6 +77,7 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
   function cleanCartList() {
     setCartList([])
   }
+
   function removeItemInCart(id: string) {
     setCartList((cartList) => {
       return cartList.filter((cartItem) => cartItem.id !== id)
@@ -113,6 +122,8 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
         addItensToOrderList,
         orderList,
         cleanCartList,
+        paymentMethod,
+        changePaymentMethod,
       }}
     >
       {children}

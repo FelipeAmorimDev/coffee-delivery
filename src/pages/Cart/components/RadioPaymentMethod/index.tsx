@@ -1,31 +1,28 @@
-import React, { ReactNode } from 'react'
+import { ReactNode, useContext } from 'react'
 import { RadioInputContainer } from './styles'
-import { useFormContext } from 'react-hook-form'
+import { cartContext } from '../../../../context/CartContext'
 
 interface RadioPaymentMethodProps {
   children: ReactNode
   value: string
-  paymentMethod: string
-  setPaymentMethod: React.Dispatch<React.SetStateAction<string>>
 }
 
 export function RadioPaymentMethod({
   children,
   value,
-  paymentMethod,
-  setPaymentMethod,
 }: RadioPaymentMethodProps) {
-  const { register } = useFormContext()
+  const { changePaymentMethod, paymentMethod } = useContext(cartContext)
+
   return (
     <RadioInputContainer>
       <label htmlFor={value}>{children}</label>
+
       <input
-        {...register('paymentMethod')}
         type="radio"
         id={value}
         value={value}
         checked={paymentMethod === value}
-        onChange={() => setPaymentMethod(value)}
+        onChange={() => changePaymentMethod(value)}
         name="paymentmethods"
       />
     </RadioInputContainer>
