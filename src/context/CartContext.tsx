@@ -1,8 +1,15 @@
-import { ReactNode, createContext, useReducer, useState } from 'react'
+import {
+  ReactNode,
+  createContext,
+  useEffect,
+  useReducer,
+  useState,
+} from 'react'
 import { cartReducer } from '../reducers/cart/reducer'
 import {
   addCoffeeItemAction,
   addItemToCartAction,
+  addItensToOrderListAction,
   cleanCartListAction,
   removeCoffeeItemAction,
   removeItemInCartAction,
@@ -22,7 +29,7 @@ interface IItemToAdd {
   quantity: number
 }
 
-interface IOrders {
+export interface IOrders {
   id: number
   zip: string
   address: string
@@ -45,22 +52,53 @@ interface CartContextData {
   addItensToOrderList: (order: IOrders) => void
   cleanCartList: () => void
   changePaymentMethod: (paymentMethod: string) => void
+  resetPaymentMethod: () => void
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const cartContext = createContext({} as CartContextData)
-// useState<IItemToAdd[]>([])
-export function CartContextProvider({ children }: CartContextProviderProps) {
-  const [cartList, dispatch] = useReducer(cartReducer, [])
-  const [orderList, setOrderList] = useState<IOrders[]>([])
-  const [paymentMethod, setPaymentMethod] = useState('Cartão de Credito')
 
-  function addItensToOrderList(newOrder: IOrders) {
-    setOrderList((previusState) => [...previusState, { ...newOrder }])
-  }
+const paymentMethodDefault = 'Cartão de Credito'
+
+export function CartContextProvider({ children }: CartContextProviderProps) {
+  const [cart, dispatch] = useReducer(
+    cartReducer,
+    {
+      cartList: [],
+      orderList: [],
+    },
+    () => {
+      const storedStateAsJSON = localStorage.getItem(
+        '@coffee-delivery:cart-state-1.0.0',
+      )
+
+      if (storedStateAsJSON) {
+        return JSON.parse(storedStateAsJSON)
+      } else {
+        return { cartList: [], orderList: [] }
+      }
+    },
+  )
+
+  const [paymentMethod, setPaymentMethod] = useState(paymentMethodDefault)
+  const { cartList, orderList } = cart
+
+  useEffect(() => {
+    const stateJSON = JSON.stringify(cart)
+
+    localStorage.setItem('@coffee-delivery:cart-state-1.0.0', stateJSON)
+  }, [cart])
 
   function changePaymentMethod(paymentMethod: string) {
     setPaymentMethod(paymentMethod)
+  }
+
+  function resetPaymentMethod() {
+    setPaymentMethod(paymentMethodDefault)
+  }
+
+  function addItensToOrderList(newOrder: IOrders) {
+    dispatch(addItensToOrderListAction(newOrder))
   }
 
   function addItemToCart(itemToAdd: IItemToAdd) {
@@ -96,6 +134,7 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
         cleanCartList,
         paymentMethod,
         changePaymentMethod,
+        resetPaymentMethod,
       }}
     >
       {children}
