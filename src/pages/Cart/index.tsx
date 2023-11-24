@@ -14,12 +14,12 @@ import { CheckoutForm } from './components/CheckoutForm'
 import { CartListData } from './components/CartListData'
 
 const confirmOrderSchema = zod.object({
-  zip: zod.number({
+  zip: zod.string({
     required_error: 'O campo cep é obrigatorio',
     invalid_type_error: 'O campo cep tem que ser um numero',
   }),
   address: zod.string().min(1, 'Digite um endereço valido'),
-  number: zod.number({
+  number: zod.string({
     required_error: 'O campo numero é obrigatorio',
     invalid_type_error: 'O campo numero é do tipo numerico',
   }),
@@ -27,20 +27,20 @@ const confirmOrderSchema = zod.object({
   neighborhood: zod.string().min(1, 'Digite um bairro valido'),
   city: zod.string().min(1, 'Digite uma cidade valida'),
   state: zod.string().min(1, 'Digite um estado valido'),
-  paymentMethod: zod.string(),
 })
 
 type ConfirmOrderData = zod.infer<typeof confirmOrderSchema>
 
 export function Cart() {
-  const { addItensToOrderList, cleanCartList } = useContext(cartContext)
+  const { addItensToOrderList, cleanCartList, paymentMethod } =
+    useContext(cartContext)
 
   const confirmOrderForm = useForm<ConfirmOrderData>({
     resolver: zodResolver(confirmOrderSchema),
     defaultValues: {
-      zip: undefined,
+      zip: '',
       address: '',
-      number: undefined,
+      number: '',
       complement: '',
       neighborhood: '',
       city: '',
@@ -58,6 +58,7 @@ export function Cart() {
     addItensToOrderList({
       ...data,
       id,
+      paymentMethod,
     })
 
     cleanCartList()

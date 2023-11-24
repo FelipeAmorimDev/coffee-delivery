@@ -145,7 +145,13 @@ export const FormLabel = styled.div`
 `
 
 export const InputsContainer = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-areas:
+    'cep . .'
+    'street street street'
+    'number fullAddress fullAddress'
+    'neighborhood city state';
+  grid-template-columns: 200px 1fr 80px;
   flex-direction: column;
   margin-top: 32px;
   margin-bottom: 92px;
@@ -164,54 +170,60 @@ export const InputsContainer = styled.div`
     &:placeholder-shown {
       background-color: ${(props) => props.theme['base-button']};
     }
+
+    + input {
+      margin-top: 16px;
+    }
   }
 
-  #address,
-  #city,
-  #complement {
-    flex: 2;
-  }
-
-  #neighborhood,
-  #number,
   #zip {
-    width: 200px;
+    grid-area: cep;
+  }
+
+  #address {
+    grid-area: street;
+  }
+
+  #number {
+    grid-area: number;
+  }
+
+  #complement {
+    grid-area: fullAddress;
+    margin-left: 12px;
     @media (max-width: 660px) {
-      width: initial;
+      margin-left: 0;
+    }
+  }
+
+  #neighborhood {
+    grid-area: neighborhood;
+  }
+
+  #city {
+    grid-area: city;
+    margin-left: 12px;
+    margin-right: 12px;
+    @media (max-width: 660px) {
+      margin-left: 0;
+      margin-right: 0;
     }
   }
 
   #state {
-    width: 60px;
-    @media (max-width: 660px) {
-      width: initial;
-    }
+    grid-area: state;
   }
 
-  > input {
-    &:first-of-type {
-      margin-bottom: 16px;
-    }
-  }
-
-  div {
-    display: flex;
-    gap: 12px;
-    margin-top: 16px;
-    @media (max-width: 660px) {
-      flex-direction: column;
-    }
-
-    /* &:first-of-type {
-      > input {
-        &:last-of-type {
-          flex: 1;
-        }
-      }
-    } */
-  }
-
-  @media (max-width: 1080px) {
+  @media (max-width: 660px) {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'cep'
+      'street'
+      'number'
+      'fullAddress'
+      'neighborhood'
+      'city'
+      'state';
   }
 `
 export const PaymentMethod = styled.div`

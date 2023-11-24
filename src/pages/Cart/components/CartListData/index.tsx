@@ -11,6 +11,7 @@ export function CartListData() {
     0,
   )
   const deliveryPrice = 10.5
+
   return (
     <>
       {' '}
