@@ -8,10 +8,9 @@ import {
 import { FormLabel, InputsContainer, PaymentMethod } from '../../styles'
 import { RadioPaymentMethod } from '../RadioPaymentMethod'
 import { useFormContext } from 'react-hook-form'
-import { useState } from 'react'
+import { formInputs } from './inputs'
 
 export function CheckoutForm() {
-  const [paymentMethod, setPaymentMethod] = useState('Cartão de Credito')
   const { register } = useFormContext()
 
   return (
@@ -24,53 +23,13 @@ export function CheckoutForm() {
         </div>
       </FormLabel>
       <InputsContainer>
-        <input
-          type="number"
-          id="zip"
-          maxLength={8}
-          placeholder="CEP"
-          {...register('zip', { valueAsNumber: true })}
-        />
-        <input
-          type="text"
-          id="address"
-          placeholder="Rua"
-          {...register('address')}
-        />
-        <div>
+        {formInputs.map((formInput) => (
           <input
-            type="number"
-            id="number"
-            placeholder="Número"
-            {...register('number', { valueAsNumber: true })}
+            key={formInput.id}
+            {...formInput}
+            {...register(formInput.id)}
           />
-          <input
-            type="text"
-            id="complement"
-            placeholder="Complemento"
-            {...register('complement')}
-          />
-        </div>
-        <div>
-          <input
-            type="text"
-            id="neighborhood"
-            placeholder="Bairro"
-            {...register('neighborhood')}
-          />
-          <input
-            type="text"
-            id="city"
-            placeholder="Cidade"
-            {...register('city')}
-          />
-          <input
-            type="text"
-            id="state"
-            placeholder="UF"
-            {...register('state')}
-          />
-        </div>
+        ))}
       </InputsContainer>
       <FormLabel>
         <CurrencyDollar size={22} color="#C47F17" />
@@ -82,27 +41,15 @@ export function CheckoutForm() {
         </div>
       </FormLabel>
       <PaymentMethod>
-        <RadioPaymentMethod
-          value="Cartão de Credito"
-          setPaymentMethod={setPaymentMethod}
-          paymentMethod={paymentMethod}
-        >
+        <RadioPaymentMethod value="Cartão de Credito">
           <CreditCard size={16} color="#8047F8" />
           CARTÃO DE CRÉDITO
         </RadioPaymentMethod>
-        <RadioPaymentMethod
-          value="Cartão de Debito"
-          setPaymentMethod={setPaymentMethod}
-          paymentMethod={paymentMethod}
-        >
+        <RadioPaymentMethod value="Cartão de Debito">
           <Bank size={16} color="#8047F8" />
           CARTÃO DE DÉBITO
         </RadioPaymentMethod>
-        <RadioPaymentMethod
-          value="Dinheiro"
-          setPaymentMethod={setPaymentMethod}
-          paymentMethod={paymentMethod}
-        >
+        <RadioPaymentMethod value="Dinheiro">
           <Money size={16} color="#8047F8" />
           DINHEIRO
         </RadioPaymentMethod>
