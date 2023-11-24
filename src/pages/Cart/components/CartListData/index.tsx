@@ -3,14 +3,15 @@ import { CartList, PriceContainer } from '../../styles'
 import { CartItem } from '../CartItem'
 import { cartContext } from '../../../../context/CartContext'
 
+const deliveryPrice = 10.5
+
 export function CartListData() {
   const { cartList } = useContext(cartContext)
 
   const totalCartPrice = cartList.reduce(
-    (acc, cartItem) => Number(cartItem.price) * cartItem.quantity + acc,
+    (acc, cartItem) => (acc += cartItem.price * cartItem.quantity),
     0,
   )
-  const deliveryPrice = 10.5
 
   return (
     <>

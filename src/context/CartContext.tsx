@@ -44,16 +44,15 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
       cartList: [],
       orderList: [],
     },
-    () => {
+    (cartState) => {
       const storedStateAsJSON = localStorage.getItem(
         '@coffee-delivery:cart-state-1.0.0',
       )
 
       if (storedStateAsJSON) {
         return JSON.parse(storedStateAsJSON)
-      } else {
-        return { cartList: [], orderList: [] }
       }
+      return cartState
     },
   )
   const [paymentMethod, setPaymentMethod] = useState(paymentMethodDefault)
