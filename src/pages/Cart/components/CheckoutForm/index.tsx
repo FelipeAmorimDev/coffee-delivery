@@ -32,7 +32,7 @@ export function CheckoutForm() {
         ))}
       </InputsContainer>
       <FormLabel>
-        <CurrencyDollar size={22} color="#C47F17" />
+        <CurrencyDollar size={22} color="#8047F8" />
         <div>
           <span>Pagamento</span>
           <span>
