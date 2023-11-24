@@ -32,8 +32,12 @@ const confirmOrderSchema = zod.object({
 type ConfirmOrderData = zod.infer<typeof confirmOrderSchema>
 
 export function Cart() {
-  const { addItensToOrderList, cleanCartList, paymentMethod } =
-    useContext(cartContext)
+  const {
+    addItensToOrderList,
+    cleanCartList,
+    paymentMethod,
+    resetPaymentMethod,
+  } = useContext(cartContext)
 
   const confirmOrderForm = useForm<ConfirmOrderData>({
     resolver: zodResolver(confirmOrderSchema),
@@ -61,6 +65,7 @@ export function Cart() {
       paymentMethod,
     })
 
+    resetPaymentMethod()
     cleanCartList()
 
     navigate(`/order/${id}/success`)

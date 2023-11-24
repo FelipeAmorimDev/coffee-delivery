@@ -18,7 +18,6 @@ export function CartItem({ coffee }: CartItemProps) {
     useContext(cartContext)
   return (
     <>
-      {console.log(coffee)}
       <li>
         <CartItemHeader>
           <img src={coffee.image} alt="" />
