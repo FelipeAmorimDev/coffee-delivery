@@ -1,3 +1,4 @@
+import { IOrders } from '../../context/CartContext'
 import { IItemToAdd } from '../../pages/Home'
 
 export enum ActionTypes {
@@ -6,6 +7,7 @@ export enum ActionTypes {
   REMOVE_ITEM_IN_CART = 'REMOVE_ITEM_IN_CART',
   DECREASE_ITEM_QUANTITY = 'DECREASE_ITEM_QUANTITY',
   INCREASE_ITEM_QUANTITY = 'INCREASE_ITEM_QUANTITY',
+  CHECKOUT = 'CHECKOUT',
 }
 
 export function addItemToCartAction(itemToAdd: IItemToAdd) {
@@ -46,6 +48,15 @@ export function addCoffeeItemAction(id: string) {
     type: ActionTypes.INCREASE_ITEM_QUANTITY,
     payload: {
       id,
+    },
+  }
+}
+
+export function addItensToOrderListAction(newOrder: IOrders) {
+  return {
+    type: ActionTypes.CHECKOUT,
+    payload: {
+      newOrder,
     },
   }
 }
