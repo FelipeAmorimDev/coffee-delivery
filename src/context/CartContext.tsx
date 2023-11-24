@@ -10,10 +10,10 @@ import {
   addCoffeeItemAction,
   addItemToCartAction,
   addItensToOrderListAction,
-  cleanCartListAction,
   removeCoffeeItemAction,
   removeItemInCartAction,
 } from '../reducers/cart/actions'
+import { useNavigate } from 'react-router-dom'
 
 interface CartContextProviderProps {
   children: ReactNode
@@ -28,7 +28,6 @@ interface CartContextData {
   removeCoffeeItem: (id: string) => void
   removeItemInCart: (id: string) => void
   addItensToOrderList: (order: IOrder) => void
-  cleanCartList: () => void
   changePaymentMethod: (paymentMethod: string) => void
   resetPaymentMethod: () => void
 }
@@ -60,6 +59,11 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
   const [paymentMethod, setPaymentMethod] = useState(paymentMethodDefault)
 
   const { cartList, orderList } = cart
+  const navigate = useNavigate()
+
+  function callbackNavegate(url: string) {
+    navigate(url)
+  }
 
   useEffect(() => {
     const stateJSON = JSON.stringify(cart)
@@ -76,15 +80,11 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
   }
 
   function addItensToOrderList(newOrder: IOrder) {
-    dispatch(addItensToOrderListAction(newOrder))
+    dispatch(addItensToOrderListAction(newOrder, callbackNavegate))
   }
 
   function addItemToCart(itemToAdd: ICoffee) {
     dispatch(addItemToCartAction(itemToAdd))
-  }
-
-  function cleanCartList() {
-    dispatch(cleanCartListAction())
   }
 
   function removeItemInCart(id: string) {
@@ -109,7 +109,6 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
         removeItemInCart,
         addItensToOrderList,
         orderList,
-        cleanCartList,
         paymentMethod,
         changePaymentMethod,
         resetPaymentMethod,

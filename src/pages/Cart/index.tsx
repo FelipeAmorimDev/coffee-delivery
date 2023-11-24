@@ -9,7 +9,6 @@ import { cartContext } from '../../context/CartContext'
 import { FormProvider, useForm } from 'react-hook-form'
 import * as zod from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useNavigate } from 'react-router-dom'
 import { CheckoutForm } from './components/CheckoutForm'
 import { CartListData } from './components/CartListData'
 
@@ -32,12 +31,8 @@ const confirmOrderSchema = zod.object({
 type ConfirmOrderData = zod.infer<typeof confirmOrderSchema>
 
 export function Cart() {
-  const {
-    addItensToOrderList,
-    cleanCartList,
-    paymentMethod,
-    resetPaymentMethod,
-  } = useContext(cartContext)
+  const { addItensToOrderList, paymentMethod, resetPaymentMethod } =
+    useContext(cartContext)
 
   const confirmOrderForm = useForm<ConfirmOrderData>({
     resolver: zodResolver(confirmOrderSchema),
@@ -54,21 +49,13 @@ export function Cart() {
 
   const { handleSubmit } = confirmOrderForm
 
-  const navigate = useNavigate()
-
   function handleConfirmOrder(data: ConfirmOrderData) {
-    const id = new Date().getTime()
-
     addItensToOrderList({
       ...data,
-      id,
       paymentMethod,
     })
 
     resetPaymentMethod()
-    cleanCartList()
-
-    navigate(`/order/${id}/success`)
   }
 
   return (

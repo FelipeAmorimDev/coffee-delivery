@@ -12,7 +12,7 @@ export interface ICoffee {
 }
 
 export interface IOrder {
-  id: number
+  id?: number
   zip: string
   address: string
   number: string
@@ -27,6 +27,7 @@ interface ICart {
   cartList: ICoffee[]
   orderList: IOrder[]
 }
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function cartReducer(state: ICart, action: any) {
   switch (action.type) {
@@ -43,11 +44,6 @@ export function cartReducer(state: ICart, action: any) {
         }
       })
     }
-
-    case ActionTypes.CLEAR_CART_LIST:
-      return produce(state, (draft) => {
-        draft.cartList.splice(0)
-      })
 
     case ActionTypes.REMOVE_ITEM_IN_CART:
       return produce(state, (draft) => {
@@ -81,7 +77,13 @@ export function cartReducer(state: ICart, action: any) {
 
     case ActionTypes.CHECKOUT:
       return produce(state, (draft) => {
-        draft.orderList.push(action.payload.newOrder)
+        const newOrder = {
+          id: new Date().getTime(),
+          ...action.payload.newOrder,
+        }
+        draft.orderList.push(newOrder)
+        draft.cartList = []
+        action.payload.callbackNavegate(`/order/${newOrder.id}/success`)
       })
 
     default:

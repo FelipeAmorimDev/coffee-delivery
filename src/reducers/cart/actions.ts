@@ -1,27 +1,19 @@
-import { IOrders } from '../../context/CartContext'
-import { IItemToAdd } from '../../pages/Home'
+import { ICoffee, IOrder } from './reducer'
 
 export enum ActionTypes {
   ADD_ITEM_TO_CART = 'ADD_ITEM_TO_CART',
-  CLEAR_CART_LIST = 'CLEAR_CART_LIST',
   REMOVE_ITEM_IN_CART = 'REMOVE_ITEM_IN_CART',
   DECREASE_ITEM_QUANTITY = 'DECREASE_ITEM_QUANTITY',
   INCREASE_ITEM_QUANTITY = 'INCREASE_ITEM_QUANTITY',
   CHECKOUT = 'CHECKOUT',
 }
 
-export function addItemToCartAction(itemToAdd: IItemToAdd) {
+export function addItemToCartAction(itemToAdd: ICoffee) {
   return {
     type: ActionTypes.ADD_ITEM_TO_CART,
     payload: {
       itemToAdd,
     },
-  }
-}
-
-export function cleanCartListAction() {
-  return {
-    type: ActionTypes.CLEAR_CART_LIST,
   }
 }
 
@@ -52,11 +44,15 @@ export function addCoffeeItemAction(id: string) {
   }
 }
 
-export function addItensToOrderListAction(newOrder: IOrders) {
+export function addItensToOrderListAction(
+  newOrder: IOrder,
+  callbackNavegate: (url: string) => void,
+) {
   return {
     type: ActionTypes.CHECKOUT,
     payload: {
       newOrder,
+      callbackNavegate,
     },
   }
 }
