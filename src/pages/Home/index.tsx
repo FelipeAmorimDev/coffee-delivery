@@ -37,16 +37,6 @@ const benefits = [
   },
 ]
 
-export interface IItemToAdd {
-  id: string
-  title: string
-  description: string
-  tags: string[]
-  price: string
-  image: string
-  quantity: number
-}
-
 export function Home() {
   return (
     <main>

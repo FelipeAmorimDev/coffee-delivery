@@ -5,7 +5,7 @@ import {
   useReducer,
   useState,
 } from 'react'
-import { cartReducer } from '../reducers/cart/reducer'
+import { ICoffee, IOrder, cartReducer } from '../reducers/cart/reducer'
 import {
   addCoffeeItemAction,
   addItemToCartAction,
@@ -19,37 +19,15 @@ interface CartContextProviderProps {
   children: ReactNode
 }
 
-interface IItemToAdd {
-  id: string
-  title: string
-  description: string
-  tags: string[]
-  price: string
-  image: string
-  quantity: number
-}
-
-export interface IOrders {
-  id: number
-  zip: string
-  address: string
-  number: string
-  complement: string
-  neighborhood: string
-  city: string
-  state: string
-  paymentMethod: string
-}
-
 interface CartContextData {
-  cartList: IItemToAdd[]
-  orderList: IOrders[]
+  cartList: ICoffee[]
+  orderList: IOrder[]
   paymentMethod: string
-  addItemToCart: (itemToAdd: IItemToAdd) => void
+  addItemToCart: (itemToAdd: ICoffee) => void
   addCoffeeItem: (id: string) => void
   removeCoffeeItem: (id: string) => void
   removeItemInCart: (id: string) => void
-  addItensToOrderList: (order: IOrders) => void
+  addItensToOrderList: (order: IOrder) => void
   cleanCartList: () => void
   changePaymentMethod: (paymentMethod: string) => void
   resetPaymentMethod: () => void
@@ -79,8 +57,8 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
       }
     },
   )
-
   const [paymentMethod, setPaymentMethod] = useState(paymentMethodDefault)
+
   const { cartList, orderList } = cart
 
   useEffect(() => {
@@ -97,11 +75,11 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     setPaymentMethod(paymentMethodDefault)
   }
 
-  function addItensToOrderList(newOrder: IOrders) {
+  function addItensToOrderList(newOrder: IOrder) {
     dispatch(addItensToOrderListAction(newOrder))
   }
 
-  function addItemToCart(itemToAdd: IItemToAdd) {
+  function addItemToCart(itemToAdd: ICoffee) {
     dispatch(addItemToCartAction(itemToAdd))
   }
 

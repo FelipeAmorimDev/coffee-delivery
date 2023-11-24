@@ -5,12 +5,13 @@ import {
   CartItemHeaderContainer,
   CartItemSeparator,
 } from '../../styles'
-import { IItemToAdd } from '../../../Home'
+
 import { useContext } from 'react'
 import { cartContext } from '../../../../context/CartContext'
+import { ICoffee } from '../../../../reducers/cart/reducer'
 
 interface CartItemProps {
-  coffee: IItemToAdd
+  coffee: ICoffee
 }
 
 export function CartItem({ coffee }: CartItemProps) {
