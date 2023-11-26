@@ -44,6 +44,14 @@ export const CartListContainer = styled.div`
     color: ${(props) => props.theme.white};
     margin-top: 36px;
     cursor: pointer;
+    transition: 0.2s;
+    &:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+    &:not(:disabled):hover {
+      background: ${(props) => props.theme['yellow-dark']};
+    }
   }
 
   @media (max-width: 660px) {

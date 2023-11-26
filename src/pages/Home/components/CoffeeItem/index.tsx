@@ -52,7 +52,7 @@ export function CoffeeItem({ coffe }: CoffeeItemProps) {
       <p>{coffe.description}</p>
 
       <div>
-        R$ <span>{coffe.price}</span>
+        R$ <span>{coffe.price.toFixed(2)}</span>
         <AddToCartOptions>
           <ItemQuantity
             quantity={quantity}

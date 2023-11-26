@@ -32,7 +32,9 @@ export function CartListData() {
           Total<span>R$ {(totalCartPrice + deliveryPrice).toFixed(2)}</span>
         </p>
       </PriceContainer>
-      <button form="checkoutform">CONFIRMAR PEDIDO</button>
+      <button form="checkoutform" disabled={!cartList.length}>
+        CONFIRMAR PEDIDO
+      </button>
     </>
   )
 }
