@@ -9,21 +9,32 @@ export const SuccessOrderContainer = styled.section`
   gap: 102px;
   margin-top: 80px;
   align-items: end;
+  > div > div {
+    width: 100%;
+    border: 3px solid;
+    border-radius: 6px 36px;
+
+    border-color: transparent;
+    background-origin: border-box;
+    background-image: ${({ theme }) =>
+      `linear-gradient(to bottom right, ${theme.yellow}, ${theme.purple})`};
+    overflow: hidden;
+  }
 
   ul {
-    margin-top: 40px;
     padding: 40px;
-    border-radius: 6px 36px;
-    border: 1px solid #dbac2c;
+    width: 100%;
+    background: white;
   }
 
   h1 {
     ${mixins.fonts.titleL}
     color: ${(props) => props.theme['yellow-dark']};
   }
-  > p {
+  > div > p {
     ${mixins.fonts.textS}
     color: ${(props) => props.theme['base-subtitle']};
+    margin-bottom: 40px;
   }
 `
 

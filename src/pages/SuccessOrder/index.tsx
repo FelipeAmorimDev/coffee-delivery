@@ -17,54 +17,60 @@ export function SuccessOrder() {
     (order) => order.id === Number(params.orderId),
   )
 
-  return (
-    <SuccessOrderContainer>
-      <div>
-        <h1>Uhu! Pedido confirmado</h1>
-        <p>Agora é só aguardar que logo o café chegará até você</p>
-        <ul>
-          <DeliveryInfoItem>
-            <IconContainer>
-              <MapPin size={16} weight="fill" color="#FAFAFA" />
-            </IconContainer>
-            <DataContainer>
-              <p>
-                Entrega em{' '}
-                <strong>
-                  {orderConfirmed?.address}, {orderConfirmed?.number}
-                </strong>
-              </p>
-              <p>
-                {orderConfirmed?.neighborhood} - {orderConfirmed?.city},{' '}
-                {orderConfirmed?.state}
-              </p>
-            </DataContainer>
-          </DeliveryInfoItem>
-          <DeliveryInfoItem>
-            <IconContainer>
-              <Timer size={16} weight="fill" color="#FAFAFA" />
-            </IconContainer>
-            <DataContainer>
-              <p>Previsão de entrega</p>
-              <p>
-                <strong>20 min - 30 min</strong>
-              </p>
-            </DataContainer>
-          </DeliveryInfoItem>
-          <DeliveryInfoItem>
-            <IconContainer>
-              <CurrencyDollar size={16} color="#FAFAFA" />
-            </IconContainer>
-            <DataContainer>
-              <p>Pagamento na entrega</p>
-              <p>
-                <strong>{orderConfirmed?.paymentMethod}</strong>
-              </p>
-            </DataContainer>
-          </DeliveryInfoItem>
-        </ul>
-      </div>
-      <img src="/images/delivery.svg" alt="" />
-    </SuccessOrderContainer>
-  )
+  if (orderConfirmed) {
+    return (
+      <SuccessOrderContainer>
+        <div>
+          <h1>Uhu! Pedido confirmado</h1>
+          <p>Agora é só aguardar que logo o café chegará até você</p>
+          <div>
+            <ul>
+              <DeliveryInfoItem>
+                <IconContainer>
+                  <MapPin size={16} weight="fill" color="#FAFAFA" />
+                </IconContainer>
+                <DataContainer>
+                  <p>
+                    Entrega em{' '}
+                    <strong>
+                      {orderConfirmed.address}, {orderConfirmed.number}
+                    </strong>
+                  </p>
+                  <p>
+                    {orderConfirmed.neighborhood} - {orderConfirmed.city},{' '}
+                    {orderConfirmed.state}
+                  </p>
+                </DataContainer>
+              </DeliveryInfoItem>
+              <DeliveryInfoItem>
+                <IconContainer>
+                  <Timer size={16} weight="fill" color="#FAFAFA" />
+                </IconContainer>
+                <DataContainer>
+                  <p>Previsão de entrega</p>
+                  <p>
+                    <strong>20 min - 30 min</strong>
+                  </p>
+                </DataContainer>
+              </DeliveryInfoItem>
+              <DeliveryInfoItem>
+                <IconContainer>
+                  <CurrencyDollar size={16} color="#FAFAFA" />
+                </IconContainer>
+                <DataContainer>
+                  <p>Pagamento na entrega</p>
+                  <p>
+                    <strong>{orderConfirmed.paymentMethod}</strong>
+                  </p>
+                </DataContainer>
+              </DeliveryInfoItem>
+            </ul>
+          </div>
+        </div>
+        <img src="/images/delivery.svg" alt="" />
+      </SuccessOrderContainer>
+    )
+  } else {
+    return <h1>Compra não encontrada</h1>
+  }
 }
